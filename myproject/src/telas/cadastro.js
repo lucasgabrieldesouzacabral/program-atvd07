@@ -1,17 +1,23 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebaseConfig';
 
-export default function LoginScreen({ navigation }) {
+export default function RegisterScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirm, setConfirm] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = async () => {
-    if (!email || !password) {
-      setError('Preencha e-mail e senha');
+  const aoCadastrar = async () => {
+    if (!email || !senha || !confirmarSenha) {
+      setErro('Preencha todos os campos');
+      return;
+    }
+
+    if (password !== confirm) {
+      setError('As senhas não coincidem');
       return;
     }
 
@@ -19,9 +25,9 @@ export default function LoginScreen({ navigation }) {
     setError('');
 
     try {
-      await signInWithEmailAndPassword(auth, email.trim(), password);
+      await createUserWithEmailAndPassword(auth, email.trim(), password);
     } catch (err) {
-      setError('Não foi possível entrar. Verifique os dados.');
+      setError('Não foi possível cadastrar. Verifique os dados.');
       console.log(err);
     } finally {
       setLoading(false);
@@ -31,9 +37,14 @@ export default function LoginScreen({ navigation }) {
   return (
     <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <View style={styles.card}>
-        <Text style={styles.title}>Conheça o Mundo</Text>
-        <Text style={styles.subtitle}>Explore, descubra e viaje.</Text>
+        <Text style={styles.title}>Criar Conta</Text>
+        <Text style={styles.subtitle}>Preencha os dados para se cadastrar.</Text>
 
+        <TextInput
+          style={styles.input}
+          placeholder="Nome completo"
+          autoCapitalize="words"
+        />
         <TextInput
           style={styles.input}
           placeholder="E-mail"
@@ -49,17 +60,24 @@ export default function LoginScreen({ navigation }) {
           value={password}
           onChangeText={setPassword}
         />
+        <TextInput
+          style={styles.input}
+          placeholder="Confirmar senha"
+          secureTextEntry
+          value={confirm}
+          onChangeText={setConfirm}
+        />
 
         {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
-        <TouchableOpacity style={styles.button} onPress={handleLogin} disabled={loading}>
-          <Text style={styles.buttonText}>{loading ? 'Entrando...' : 'Entrar'}</Text>
+        <TouchableOpacity style={styles.button} onPress={handleRegister} disabled={loading}>
+          <Text style={styles.buttonText}>{loading ? 'Cadastrando...' : 'Cadastrar'}</Text>
         </TouchableOpacity>
 
         <View style={styles.footer}>
-          <Text style={styles.footerText}>Ainda não tem conta?</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-            <Text style={styles.footerLink}> Cadastre-se</Text>
+          <Text style={styles.footerText}>Já tem conta?</Text>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Text style={styles.footerLink}> Faça login</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -85,7 +103,7 @@ const styles = StyleSheet.create({
     elevation: 6,
   },
   title: {
-    fontSize: 28,
+    fontSize: 26,
     fontWeight: '700',
     color: '#1F4E9C',
     marginBottom: 6,

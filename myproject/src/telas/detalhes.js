@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { View, Text, Image, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 import FavoritesContext from '../contexts/FavoritesContext';
 
 export default function DetailsScreen({ route }) {

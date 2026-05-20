@@ -1,20 +1,20 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, TextInput, FlatList, TouchableOpacity, Image, ActivityIndicator, StyleSheet } from 'react-native';
 import axios from 'axios';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 import FavoritesContext from '../contexts/FavoritesContext';
 
 const fields = 'name,capital,flags,cca3,cca2,region,subregion,population,currencies,languages';
 
-export default function HomeScreen({ navigation }) {
-  const [countries, setCountries] = useState([]);
-  const [search, setSearch] = useState('');
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-  const { isFavorite, toggleFavorite } = useContext(FavoritesContext);
+export default function TelaInicio({ navigation: navegacao }) {
+  const [paises, setPaises] = useState([]);
+  const [busca, setBusca] = useState('');
+  const [carregando, setCarregando] = useState(true);
+  const [erro, setErro] = useState('');
+  const { ehFavorito, alternarFavorito } = useContext(ContextoFavoritos);
 
   useEffect(() => {
-    async function loadCountries() {
+    async function carregarPaises() {
       try {
         const response = await axios.get(`https://restcountries.com/v3.1/all?fields=${fields}`);
         const sorted = response.data.sort((a, b) => a.name.common.localeCompare(b.name.common));
@@ -27,7 +27,7 @@ export default function HomeScreen({ navigation }) {
       }
     }
 
-    loadCountries();
+    carregarPaises();
   }, []);
 
   const filtered = countries.filter(country => {
@@ -37,10 +37,10 @@ export default function HomeScreen({ navigation }) {
     return name.includes(query) || capital.includes(query);
   });
 
-  const renderCountry = ({ item }) => {
-    const favorite = isFavorite(item);
+  const renderizarPais = ({ item: pais }) => {
+    const favorito = ehFavorito(pais);
     return (
-      <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('Details', { country: item })}>
+      <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('Detalhes', { country: item })}>
         <View style={styles.leftRow}>
           <Image source={{ uri: item.flags?.png || item.flags?.svg }} style={styles.flag} />
           <View style={styles.countryInfo}>
@@ -62,8 +62,9 @@ export default function HomeScreen({ navigation }) {
         <Text style={styles.headerSubtitle}>Explore destinos e adicione aos favoritos.</Text>
       </View>
       <View style={styles.searchBox}>
+        <FontAwesome name="search" size={18} color="#7A8BAE" style={styles.searchIcon} />
         <TextInput
-          placeholder="Pesquisar país ou capital"
+          placeholder="Pesquisar país..."
           style={styles.searchInput}
           value={search}
           onChangeText={setSearch}
@@ -75,9 +76,9 @@ export default function HomeScreen({ navigation }) {
         <Text style={styles.errorText}>{error}</Text>
       ) : (
         <FlatList
-          data={filtered}
-          keyExtractor={item => item.cca3 || item.cca2 || item.name.common}
-          renderItem={renderCountry}
+          data={paisesFiltrados}
+          keyExtractor={pais => pais.cca3 || pais.cca2 || pais.name.common}
+          renderItem={renderizarPais}
           contentContainerStyle={{ paddingBottom: 24 }}
         />
       )}
@@ -104,15 +105,21 @@ const styles = StyleSheet.create({
     marginTop: 6,
   },
   searchBox: {
-    marginBottom: 16,
-  },
-  searchInput: {
-    height: 48,
+    flexDirection: 'row',
+    alignItems: 'center',
     backgroundColor: '#fff',
     borderRadius: 14,
-    paddingHorizontal: 16,
     borderWidth: 1,
     borderColor: '#D6DAE7',
+    paddingHorizontal: 14,
+    marginBottom: 16,
+  },
+  searchIcon: {
+    marginRight: 10,
+  },
+  searchInput: {
+    flex: 1,
+    height: 48,
   },
   card: {
     flexDirection: 'row',

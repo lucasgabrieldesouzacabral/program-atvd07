@@ -4,30 +4,25 @@ import { auth } from '../../firebaseConfig';
 import { signOut, updatePassword } from 'firebase/auth';
 import FavoritesContext from '../contexts/FavoritesContext';
 
-export default function ProfileScreen() {
-  const { favorites } = useContext(FavoritesContext);
-  const [newPassword, setNewPassword] = useState('');
-  const [message, setMessage] = useState('');
-  const [loading, setLoading] = useState(false);
-  const user = auth.currentUser;
-
-  const stats = [
-    { label: 'Favoritos', value: favorites.length },
-    { label: 'Países', value: favorites.length > 0 ? favorites.length * 2 : 0 },
-  ];
+export default function TelaPerfil() {
+  const { favoritos } = useContext(ContextoFavoritos);
+  const [novaSenha, setNovaSenha] = useState('');
+  const [mensagem, setMensagem] = useState('');
+  const [carregando, setCarregando] = useState(false);
+  const usuario = autenticacao.currentUser;
 
   const handleSignOut = async () => {
     try {
-      await signOut(auth);
+      await signOut(autenticacao);
     } catch (err) {
       Alert.alert('Erro', 'Não foi possível sair. Tente novamente.');
       console.log(err);
     }
   };
 
-  const handlePasswordChange = async () => {
-    if (!newPassword || newPassword.length < 6) {
-      setMessage('A senha deve ter pelo menos 6 caracteres.');
+  const aoAlterarSenha = async () => {
+    if (!novaSenha || novaSenha.length < 6) {
+      setMensagem('A senha deve ter pelo menos 6 caracteres.');
       return;
     }
 
@@ -51,21 +46,16 @@ export default function ProfileScreen() {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.pageTitle}>Meu Perfil</Text>
+
       <View style={styles.profileCard}>
-        <View style={styles.avatarPlaceholder}>
-          <Text style={styles.avatarText}>{user?.email?.charAt(0)?.toUpperCase() || 'U'}</Text>
-        </View>
-        <Text style={styles.name}>{user?.email || 'Usuário'}</Text>
-        <Text style={styles.email}>{user?.email || 'email@exemplo.com'}</Text>
+        <Text style={styles.name}>Minha conta</Text>
+        <Text style={styles.email}>{user?.email || 'E-mail não disponível'}</Text>
       </View>
 
-      <View style={styles.statsRow}>
-        {stats.map(stat => (
-          <View key={stat.label} style={styles.statCard}>
-            <Text style={styles.statLabel}>{stat.label}</Text>
-            <Text style={styles.statValue}>{stat.value}</Text>
-          </View>
-        ))}
+      <View style={styles.statCard}>
+        <Text style={styles.statLabel}>Favoritos</Text>
+        <Text style={styles.statValue}>{favorites.length}</Text>
       </View>
 
       <View style={styles.section}>
@@ -96,6 +86,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#E5EFF9',
     padding: 16,
   },
+  pageTitle: {
+    fontSize: 28,
+    fontWeight: '700',
+    color: '#1F4E9C',
+    marginBottom: 16,
+  },
   profileCard: {
     backgroundColor: '#fff',
     borderRadius: 22,
@@ -108,20 +104,6 @@ const styles = StyleSheet.create({
     shadowRadius: 20,
     elevation: 4,
   },
-  avatarPlaceholder: {
-    width: 96,
-    height: 96,
-    borderRadius: 48,
-    backgroundColor: '#D6E1F5',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 18,
-  },
-  avatarText: {
-    fontSize: 34,
-    fontWeight: '700',
-    color: '#234F9C',
-  },
   name: {
     fontSize: 20,
     fontWeight: '700',
@@ -132,18 +114,12 @@ const styles = StyleSheet.create({
     color: '#7A8BAE',
     fontSize: 14,
   },
-  statsRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 22,
-  },
   statCard: {
-    flex: 1,
     backgroundColor: '#fff',
     borderRadius: 18,
     padding: 16,
     alignItems: 'center',
-    marginHorizontal: 4,
+    marginBottom: 22,
   },
   statLabel: {
     color: '#7A8BAE',

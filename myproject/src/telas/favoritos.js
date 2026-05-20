@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import FavoritesContext from '../contexts/FavoritesContext';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 export default function FavoritesScreen({ navigation }) {
   const { favorites, toggleFavorite } = useContext(FavoritesContext);
@@ -21,7 +21,7 @@ export default function FavoritesScreen({ navigation }) {
             <TouchableOpacity
               key={item.cca3 || item.cca2 || item.name.common}
               style={styles.card}
-              onPress={() => navigation.navigate('Details', { country: item })}
+              onPress={() => navigation.navigate('Detalhes', { country: item })}
             >
               <View style={styles.leftRow}>
                 <Image source={{ uri: item.flags?.png || item.flags?.svg }} style={styles.flag} />

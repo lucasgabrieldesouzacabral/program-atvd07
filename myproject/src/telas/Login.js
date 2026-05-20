@@ -1,23 +1,17 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebaseConfig';
 
-export default function RegisterScreen({ navigation }) {
+export default function TelaEntrar({ navigation: navegacao }) {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirm, setConfirm] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [senha, setSenha] = useState('');
+  const [erro, setErro] = useState('');
+  const [carregando, setCarregando] = useState(false);
 
-  const handleRegister = async () => {
-    if (!email || !password || !confirm) {
-      setError('Preencha todos os campos');
-      return;
-    }
-
-    if (password !== confirm) {
-      setError('As senhas não coincidem');
+  const aoEntrar = async () => {
+    if (!email || !senha) {
+      setErro('Preencha e-mail e senha');
       return;
     }
 
@@ -25,9 +19,9 @@ export default function RegisterScreen({ navigation }) {
     setError('');
 
     try {
-      await createUserWithEmailAndPassword(auth, email.trim(), password);
+      await signInWithEmailAndPassword(auth, email.trim(), password);
     } catch (err) {
-      setError('Não foi possível cadastrar. Verifique os dados.');
+      setError('Não foi possível entrar. Verifique os dados.');
       console.log(err);
     } finally {
       setLoading(false);
@@ -37,14 +31,9 @@ export default function RegisterScreen({ navigation }) {
   return (
     <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <View style={styles.card}>
-        <Text style={styles.title}>Criar Conta</Text>
-        <Text style={styles.subtitle}>Preencha os dados para se cadastrar.</Text>
+        <Text style={styles.title}>Conheça o Mundo</Text>
+        <Text style={styles.subtitle}>Explore. Descubra. Viaje.</Text>
 
-        <TextInput
-          style={styles.input}
-          placeholder="Nome completo"
-          autoCapitalize="words"
-        />
         <TextInput
           style={styles.input}
           placeholder="E-mail"
@@ -60,24 +49,17 @@ export default function RegisterScreen({ navigation }) {
           value={password}
           onChangeText={setPassword}
         />
-        <TextInput
-          style={styles.input}
-          placeholder="Confirmar senha"
-          secureTextEntry
-          value={confirm}
-          onChangeText={setConfirm}
-        />
 
         {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
-        <TouchableOpacity style={styles.button} onPress={handleRegister} disabled={loading}>
-          <Text style={styles.buttonText}>{loading ? 'Cadastrando...' : 'Cadastrar'}</Text>
+        <TouchableOpacity style={styles.button} onPress={handleLogin} disabled={loading}>
+          <Text style={styles.buttonText}>{loading ? 'Entrando...' : 'Entrar'}</Text>
         </TouchableOpacity>
 
         <View style={styles.footer}>
-          <Text style={styles.footerText}>Já tem conta?</Text>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Text style={styles.footerLink}> Faça login</Text>
+          <Text style={styles.footerText}>Ainda não tem conta?</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('Cadastro')}>
+            <Text style={styles.footerLink}> Cadastre-se</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -103,7 +85,7 @@ const styles = StyleSheet.create({
     elevation: 6,
   },
   title: {
-    fontSize: 26,
+    fontSize: 28,
     fontWeight: '700',
     color: '#1F4E9C',
     marginBottom: 6,
