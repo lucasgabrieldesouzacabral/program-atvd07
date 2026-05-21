@@ -3,15 +3,15 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingVi
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebaseConfig';
 
-export default function TelaEntrar({ navigation: navegacao }) {
+export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
-  const [erro, setErro] = useState('');
-  const [carregando, setCarregando] = useState(false);
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const aoEntrar = async () => {
-    if (!email || !senha) {
-      setErro('Preencha e-mail e senha');
+  const handleLogin = async () => {
+    if (!email || !password) {
+      setError('Preencha e-mail e senha');
       return;
     }
 
@@ -58,7 +58,7 @@ export default function TelaEntrar({ navigation: navegacao }) {
 
         <View style={styles.footer}>
           <Text style={styles.footerText}>Ainda não tem conta?</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Cadastro')}>
+          <TouchableOpacity onPress={() => navigation.navigate('Register')}>
             <Text style={styles.footerLink}> Cadastre-se</Text>
           </TouchableOpacity>
         </View>

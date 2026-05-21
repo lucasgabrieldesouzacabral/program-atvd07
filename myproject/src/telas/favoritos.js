@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Image, StyleSheet } from 'react-native';
-import FavoritesContext from '../contexts/FavoritesContext';
+import FavoritesContext from '../contexts/FavoritesContext.js';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 export default function FavoritesScreen({ navigation }) {

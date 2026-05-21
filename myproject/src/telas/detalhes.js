@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { View, Text, Image, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import FavoritesContext from '../contexts/FavoritesContext';
+import FavoritesContext from '../contexts/FavoritesContext.js';
 
 export default function DetailsScreen({ route }) {
   const { country } = route.params;

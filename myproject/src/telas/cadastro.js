@@ -1,22 +1,23 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth } from '../../firebaseConfig';
 
 export default function RegisterScreen({ navigation }) {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirm, setConfirm] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const aoCadastrar = async () => {
-    if (!email || !senha || !confirmarSenha) {
-      setErro('Preencha todos os campos');
+  const handleRegister = async () => {
+    if (!name || !email || !password || !confirmPassword) {
+      setError('Preencha todos os campos');
       return;
     }
 
-    if (password !== confirm) {
+    if (password !== confirmPassword) {
       setError('As senhas não coincidem');
       return;
     }
@@ -25,7 +26,10 @@ export default function RegisterScreen({ navigation }) {
     setError('');
 
     try {
-      await createUserWithEmailAndPassword(auth, email.trim(), password);
+      const userCredential = await createUserWithEmailAndPassword(auth, email.trim(), password);
+      await updateProfile(userCredential.user, {
+        displayName: name.trim(),
+      });
     } catch (err) {
       setError('Não foi possível cadastrar. Verifique os dados.');
       console.log(err);
@@ -44,6 +48,8 @@ export default function RegisterScreen({ navigation }) {
           style={styles.input}
           placeholder="Nome completo"
           autoCapitalize="words"
+          value={name}
+          onChangeText={setName}
         />
         <TextInput
           style={styles.input}
@@ -64,8 +70,8 @@ export default function RegisterScreen({ navigation }) {
           style={styles.input}
           placeholder="Confirmar senha"
           secureTextEntry
-          value={confirm}
-          onChangeText={setConfirm}
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
         />
 
         {error ? <Text style={styles.errorText}>{error}</Text> : null}

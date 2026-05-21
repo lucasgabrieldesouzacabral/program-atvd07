@@ -2,27 +2,27 @@ import React, { useContext, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { auth } from '../../firebaseConfig';
 import { signOut, updatePassword } from 'firebase/auth';
-import FavoritesContext from '../contexts/FavoritesContext';
+import FavoritesContext from '../contexts/FavoritesContext.js';
 
-export default function TelaPerfil() {
-  const { favoritos } = useContext(ContextoFavoritos);
-  const [novaSenha, setNovaSenha] = useState('');
-  const [mensagem, setMensagem] = useState('');
-  const [carregando, setCarregando] = useState(false);
-  const usuario = autenticacao.currentUser;
+export default function ProfileScreen() {
+  const { favorites } = useContext(FavoritesContext);
+  const [newPassword, setNewPassword] = useState('');
+  const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
+  const user = auth.currentUser;
+  const displayName = user?.displayName || user?.email?.split('@')[0] || 'Usuário';
 
   const handleSignOut = async () => {
     try {
-      await signOut(autenticacao);
+      await signOut(auth);
     } catch (err) {
       Alert.alert('Erro', 'Não foi possível sair. Tente novamente.');
       console.log(err);
     }
   };
-
-  const aoAlterarSenha = async () => {
-    if (!novaSenha || novaSenha.length < 6) {
-      setMensagem('A senha deve ter pelo menos 6 caracteres.');
+  const handlePasswordChange = async () => {
+    if (!newPassword || newPassword.length < 6) {
+      setMessage('A senha deve ter pelo menos 6 caracteres.');
       return;
     }
 
@@ -49,7 +49,7 @@ export default function TelaPerfil() {
       <Text style={styles.pageTitle}>Meu Perfil</Text>
 
       <View style={styles.profileCard}>
-        <Text style={styles.name}>Minha conta</Text>
+        <Text style={styles.name}>{displayName}</Text>
         <Text style={styles.email}>{user?.email || 'E-mail não disponível'}</Text>
       </View>
 

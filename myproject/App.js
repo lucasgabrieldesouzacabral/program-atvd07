@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { onAuthStateChanged } from 'firebase/auth';
-import { autenticacao } from './firebaseConfig';
-import { ProvedorFavoritos } from './src/contexts/ContextoFavoritos';
-import TelaEntrar from './src/telas/Login';
-import TelaCadastro from './src/telas/cadastro';
-import TelaInicio from './src/telas/home';
-import TelaDetalhes from './src/telas/detalhes';
-import TelaFavoritos from './src/telas/favoritos';
-import TelaPerfil from './src/telas/perfil';
+import { auth } from './firebaseConfig';
+import { FavoritesProvider } from './src/contexts/FavoritesContext.js';
+import LoginScreen from './src/telas/Login';
+import RegisterScreen from './src/telas/cadastro';
+import HomeScreen from './src/telas/home';
+import DetailsScreen from './src/telas/detalhes';
+import FavoritesScreen from './src/telas/favoritos';
+import ProfileScreen from './src/telas/perfil';
 
 const RootStack = createNativeStackNavigator();
-const AuthStack = createNativeStackNavigator();
 const HomeStack = createNativeStackNavigator();
+const AuthStack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function HomeStackScreen() {
@@ -33,9 +33,9 @@ function HomeStackScreen() {
   );
 }
 
-function AbasPrincipal() {
+function AppTabs() {
   return (
-    <Abas.Navigator
+    <Tab.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarActiveTintColor: '#234F9C',
@@ -54,10 +54,10 @@ function AbasPrincipal() {
         },
       })}
     >
-      <Abas.Screen name="Início" component={TelaPilhaInicio} />
-      <Abas.Screen name="Favoritos" component={TelaFavoritos} />
-      <Abas.Screen name="Perfil" component={TelaPerfil} />
-    </Abas.Navigator>
+      <Tab.Screen name="Início" component={HomeStackScreen} />
+      <Tab.Screen name="Favoritos" component={FavoritesScreen} />
+      <Tab.Screen name="Perfil" component={ProfileScreen} />
+    </Tab.Navigator>
   );
 }
 
@@ -66,9 +66,9 @@ export default function App() {
   const [initializing, setInitializing] = useState(true);
 
   useEffect(() => {
-    const cancelarInscricao = onAuthStateChanged(autenticacao, usuarioAtual => {
-      setUsuario(usuarioAtual);
-      if (inicializando) setInicializando(false);
+    const unsubscribe = onAuthStateChanged(auth, currentUser => {
+      setUser(currentUser);
+      if (initializing) setInitializing(false);
     });
 
     return unsubscribe;
@@ -78,7 +78,6 @@ export default function App() {
     return (
       <View style={styles.loading}>
         <ActivityIndicator size="large" color="#234F9C" />
-        <Text style={styles.loadingText}>Carregando...</Text>
       </View>
     );
   }
@@ -86,31 +85,25 @@ export default function App() {
   return (
     <FavoritesProvider>
       <NavigationContainer>
-        {usuario ? (
-          <PilhaRaiz.Navigator
+        {user ? (
+          <RootStack.Navigator
             screenOptions={{
               headerStyle: { backgroundColor: '#234F9C' },
               headerTintColor: '#fff',
               headerTitleStyle: { fontWeight: '700' },
             }}
           >
-            <RootStack.Screen name="Principal" component={AppTabs} options={{ headerShown: false }} />
+            <RootStack.Screen name="MainTabs" component={AppTabs} options={{ headerShown: false }} />
             <RootStack.Screen
               name="Detalhes"
               component={DetailsScreen}
-              options={({ route }) => ({
-                title:
-                  route.params?.country?.translations?.por?.common ||
-                  route.params?.country?.name?.common ||
-                  'Detalhes do País',
-                headerBackTitle: 'Voltar',
-              })}
+              options={({ route }) => ({ title: route.params?.country?.name?.common || 'Detalhes' })}
             />
           </RootStack.Navigator>
         ) : (
           <AuthStack.Navigator screenOptions={{ headerShown: false }}>
-            <AuthStack.Screen name="Entrar" component={LoginScreen} />
-            <AuthStack.Screen name="Cadastro" component={RegisterScreen} />
+            <AuthStack.Screen name="Login" component={LoginScreen} />
+            <AuthStack.Screen name="Register" component={RegisterScreen} />
           </AuthStack.Navigator>
         )}
       </NavigationContainer>
@@ -124,10 +117,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#E5EFF9',
-  },
-  textoCarregando: {
-    marginTop: 12,
-    color: '#7A8BAE',
-    fontSize: 16,
   },
 });

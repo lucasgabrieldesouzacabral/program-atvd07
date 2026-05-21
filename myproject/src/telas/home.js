@@ -2,16 +2,16 @@ import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, TextInput, FlatList, TouchableOpacity, Image, ActivityIndicator, StyleSheet } from 'react-native';
 import axios from 'axios';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import FavoritesContext from '../contexts/FavoritesContext';
+import FavoritesContext from '../contexts/FavoritesContext.js';
 
 const fields = 'name,capital,flags,cca3,cca2,region,subregion,population,currencies,languages';
 
-export default function TelaInicio({ navigation: navegacao }) {
-  const [paises, setPaises] = useState([]);
-  const [busca, setBusca] = useState('');
-  const [carregando, setCarregando] = useState(true);
-  const [erro, setErro] = useState('');
-  const { ehFavorito, alternarFavorito } = useContext(ContextoFavoritos);
+export default function HomeScreen({ navigation }) {
+  const [countries, setCountries] = useState([]);
+  const [search, setSearch] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const { ehFavorito, alternarFavorito } = useContext(FavoritesContext);
 
   useEffect(() => {
     async function carregarPaises() {
@@ -30,15 +30,15 @@ export default function TelaInicio({ navigation: navegacao }) {
     carregarPaises();
   }, []);
 
-  const filtered = countries.filter(country => {
+  const filteredCountries = countries.filter(country => {
     const name = country.name.common.toLowerCase();
     const capital = country.capital?.[0]?.toLowerCase() || '';
     const query = search.toLowerCase();
     return name.includes(query) || capital.includes(query);
   });
 
-  const renderizarPais = ({ item: pais }) => {
-    const favorito = ehFavorito(pais);
+  const renderCountry = ({ item }) => {
+    const favorite = ehFavorito(item);
     return (
       <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('Detalhes', { country: item })}>
         <View style={styles.leftRow}>
@@ -48,7 +48,7 @@ export default function TelaInicio({ navigation: navegacao }) {
             <Text style={styles.countrySubtitle}>{item.capital?.[0] || 'Sem capital'}</Text>
           </View>
         </View>
-        <TouchableOpacity onPress={() => toggleFavorite(item)}>
+        <TouchableOpacity onPress={() => alternarFavorito(item)}>
           <FontAwesome name={favorite ? 'heart' : 'heart-o'} size={22} color={favorite ? '#E63946' : '#7A8BAE'} />
         </TouchableOpacity>
       </TouchableOpacity>
@@ -76,9 +76,9 @@ export default function TelaInicio({ navigation: navegacao }) {
         <Text style={styles.errorText}>{error}</Text>
       ) : (
         <FlatList
-          data={paisesFiltrados}
+          data={filteredCountries}
           keyExtractor={pais => pais.cca3 || pais.cca2 || pais.name.common}
-          renderItem={renderizarPais}
+          renderItem={renderCountry}
           contentContainerStyle={{ paddingBottom: 24 }}
         />
       )}
