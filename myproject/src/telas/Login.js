@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../firebaseConfig';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import '../../firebaseConfig';
 import styles from '../../css/telas.style.js';
 
 export default function LoginScreen({ navigation }) {
@@ -20,6 +20,7 @@ export default function LoginScreen({ navigation }) {
     setError('');
 
     try {
+      const auth = getAuth();
       await signInWithEmailAndPassword(auth, email.trim(), password);
     } catch (err) {
       setError('Não foi possível entrar. Verifique os dados.');

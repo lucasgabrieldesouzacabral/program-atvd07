@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { auth } from '../../firebaseConfig';
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import '../../firebaseConfig';
 import styles from '../../css/telas.style.js';
 
 export default function RegisterScreen({ navigation }) {
@@ -27,6 +27,7 @@ export default function RegisterScreen({ navigation }) {
     setError('');
 
     try {
+      const auth = getAuth();
       const userCredential = await createUserWithEmailAndPassword(auth, email.trim(), password);
       await updateProfile(userCredential.user, {
         displayName: name.trim(),

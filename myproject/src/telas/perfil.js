@@ -1,8 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
-import { signOut, updatePassword } from 'firebase/auth';
+import { signOut, updatePassword, getAuth } from 'firebase/auth';
 import FavoritesContext from '../contexts/FavoritesContext.js';
-import { auth } from '../../firebaseConfig';
 import styles from '../../css/telas.style.js';
 
 export default function ProfileScreen() {
@@ -10,10 +9,11 @@ export default function ProfileScreen() {
   const [newPassword, setNewPassword] = useState('');
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
+  const auth = getAuth();
   const user = auth.currentUser;
   const displayName = user?.displayName || user?.email?.split('@')[0] || 'Usuário';
 
-  const handleSignOut = async () => {
+  const sairConta = async () => {
     try {
       await signOut(auth);
     } catch (err) {
@@ -21,7 +21,31 @@ export default function ProfileScreen() {
       console.log(err);
     }
   };
-  const handlePasswordChange = async () => {
+  async function alterarSenha(novaSenha) {
+    try {
+      const auth = getAuth();
+      const user = auth.currentUser;
+
+      if (!user) {
+        throw new Error('Usuário não autenticado');
+      }
+
+      await updatePassword(user, novaSenha);
+
+      return {
+        success: true,
+        message: 'Senha alterada com sucesso!',
+      };
+    } catch (error) {
+      console.log(error);
+      return {
+        success: false,
+        message: error.message,
+      };
+    }
+  }
+
+  const alteracaoSenha = async () => {
     if (!newPassword || newPassword.length < 6) {
       setMessage('A senha deve ter pelo menos 6 caracteres.');
       return;
@@ -30,19 +54,14 @@ export default function ProfileScreen() {
     setLoading(true);
     setMessage('');
 
-    try {
-      if (!user) {
-        throw new Error('Usuário não autenticado');
-      }
-      await updatePassword(user, newPassword);
-      setMessage('Senha alterada com sucesso!');
+    const result = await alterarSenha(newPassword);
+    setMessage(result.message);
+
+    if (result.success) {
       setNewPassword('');
-    } catch (err) {
-      console.log(err);
-      setMessage('Erro ao alterar a senha. Refaça o login e tente novamente.');
-    } finally {
-      setLoading(false);
     }
+
+    setLoading(false);
   };
 
   return (
@@ -69,12 +88,12 @@ export default function ProfileScreen() {
           onChangeText={setNewPassword}
         />
         {message ? <Text style={styles.message}>{message}</Text> : null}
-        <TouchableOpacity style={styles.button} onPress={handlePasswordChange} disabled={loading}>
+        <TouchableOpacity style={styles.button} onPress={alteracaoSenha} disabled={loading}>
           <Text style={styles.buttonText}>{loading ? 'Alterando...' : 'Alterar senha'}</Text>
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity style={styles.signOutButton} onPress={handleSignOut}>
+      <TouchableOpacity style={styles.signOutButton} onPress={sairConta}>
         <Text style={styles.signOutText}>Sair</Text>
       </TouchableOpacity>
     </View>

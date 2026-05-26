@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged, getAuth } from 'firebase/auth';
 import { FavoritesProvider } from './src/contexts/FavoritesContext.js';
 import LoginScreen from './src/telas/Login';
 import RegisterScreen from './src/telas/cadastro';
@@ -12,7 +12,7 @@ import HomeScreen from './src/telas/home';
 import DetailsScreen from './src/telas/detalhes';
 import FavoritesScreen from './src/telas/favoritos';
 import ProfileScreen from './src/telas/perfil';
-import { auth } from './firebaseConfig';
+import './firebaseConfig';
 
 const RootStack = createNativeStackNavigator();
 const HomeStack = createNativeStackNavigator();
@@ -66,6 +66,7 @@ export default function App() {
   const [initializing, setInitializing] = useState(true);
 
   useEffect(() => {
+    const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, currentUser => {
       setUser(currentUser);
       if (initializing) setInitializing(false);
