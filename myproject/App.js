@@ -19,6 +19,15 @@ const HomeStack = createNativeStackNavigator();
 const AuthStack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
+const styles = StyleSheet.create({
+  loading: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#E5EFF9',
+  },
+});
+
 function HomeStackScreen() {
   return (
     <HomeStack.Navigator
@@ -112,11 +121,3 @@ export default function App() {
   );
 }
 
-const styles = StyleSheet.create({
-  loading: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#E5EFF9',
-  },
-});
