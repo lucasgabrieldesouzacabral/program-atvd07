@@ -1,8 +1,9 @@
 import React, { useContext, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
-import { auth } from '../../firebaseConfig';
 import { signOut, updatePassword } from 'firebase/auth';
 import FavoritesContext from '../contexts/FavoritesContext.js';
+import { auth } from '../../firebaseConfig';
+import styles from '../../css/telas.style.js';
 
 export default function ProfileScreen() {
   const { favorites } = useContext(FavoritesContext);
@@ -79,104 +80,3 @@ export default function ProfileScreen() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#E5EFF9',
-    padding: 16,
-  },
-  pageTitle: {
-    fontSize: 28,
-    fontWeight: '700',
-    color: '#1F4E9C',
-    marginBottom: 16,
-  },
-  profileCard: {
-    backgroundColor: '#fff',
-    borderRadius: 22,
-    padding: 24,
-    alignItems: 'center',
-    marginBottom: 20,
-    shadowColor: '#000',
-    shadowOpacity: 0.05,
-    shadowOffset: { width: 0, height: 10 },
-    shadowRadius: 20,
-    elevation: 4,
-  },
-  name: {
-    fontSize: 20,
-    fontWeight: '700',
-    color: '#1D325D',
-    marginBottom: 6,
-  },
-  email: {
-    color: '#7A8BAE',
-    fontSize: 14,
-  },
-  statCard: {
-    backgroundColor: '#fff',
-    borderRadius: 18,
-    padding: 16,
-    alignItems: 'center',
-    marginBottom: 22,
-  },
-  statLabel: {
-    color: '#7A8BAE',
-    marginBottom: 8,
-  },
-  statValue: {
-    fontSize: 22,
-    fontWeight: '700',
-    color: '#1F4E9C',
-  },
-  section: {
-    backgroundColor: '#fff',
-    borderRadius: 22,
-    padding: 20,
-    shadowColor: '#000',
-    shadowOpacity: 0.05,
-    shadowOffset: { width: 0, height: 10 },
-    shadowRadius: 20,
-    elevation: 4,
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: '#1F4E9C',
-    marginBottom: 14,
-  },
-  input: {
-    height: 48,
-    borderRadius: 14,
-    borderWidth: 1,
-    borderColor: '#D6DAE7',
-    backgroundColor: '#F7F9FD',
-    paddingHorizontal: 16,
-    marginBottom: 12,
-  },
-  message: {
-    color: '#1F4E9C',
-    marginBottom: 12,
-  },
-  button: {
-    height: 50,
-    borderRadius: 14,
-    backgroundColor: '#234F9C',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  signOutButton: {
-    marginTop: 20,
-    alignItems: 'center',
-  },
-  signOutText: {
-    color: '#E63946',
-    fontWeight: '700',
-  },
-});

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth } from '../../firebaseConfig';
+import styles from '../../css/telas.style.js';
 
 export default function RegisterScreen({ navigation }) {
   const [name, setName] = useState('');
@@ -90,72 +91,3 @@ export default function RegisterScreen({ navigation }) {
     </KeyboardAvoidingView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#E5EFF9',
-    justifyContent: 'center',
-    padding: 20,
-  },
-  card: {
-    backgroundColor: '#fff',
-    borderRadius: 20,
-    padding: 24,
-    shadowColor: '#000',
-    shadowOpacity: 0.05,
-    shadowOffset: { width: 0, height: 10 },
-    shadowRadius: 20,
-    elevation: 6,
-  },
-  title: {
-    fontSize: 26,
-    fontWeight: '700',
-    color: '#1F4E9C',
-    marginBottom: 6,
-  },
-  subtitle: {
-    fontSize: 14,
-    color: '#7A8BAE',
-    marginBottom: 24,
-  },
-  input: {
-    height: 48,
-    marginBottom: 14,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: '#D6DAE7',
-    paddingHorizontal: 16,
-    backgroundColor: '#F7F9FD',
-  },
-  button: {
-    height: 50,
-    borderRadius: 14,
-    backgroundColor: '#234F9C',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 8,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  footer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: 20,
-  },
-  footerText: {
-    color: '#7A8BAE',
-  },
-  footerLink: {
-    color: '#234F9C',
-    fontWeight: '700',
-  },
-  errorText: {
-    color: '#D93025',
-    marginBottom: 10,
-    textAlign: 'center',
-  },
-});

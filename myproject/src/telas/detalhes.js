@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { View, Text, Image, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import FavoritesContext from '../contexts/FavoritesContext.js';
+import styles from '../../css/telas.style.js';
 
 export default function DetailsScreen({ route }) {
   const { country } = route.params;
@@ -50,79 +51,3 @@ export default function DetailsScreen({ route }) {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#E5EFF9',
-  },
-  content: {
-    padding: 16,
-    paddingBottom: 32,
-  },
-  flag: {
-    width: '100%',
-    height: 220,
-    borderRadius: 18,
-    marginBottom: 18,
-  },
-  headerRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 16,
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: '700',
-    color: '#1F4E9C',
-  },
-  subtitle: {
-    fontSize: 15,
-    color: '#7A8BAE',
-    marginTop: 4,
-  },
-  favoriteButton: {
-    width: 52,
-    height: 52,
-    borderRadius: 16,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOpacity: 0.08,
-    shadowOffset: { width: 0, height: 8 },
-    shadowRadius: 10,
-    elevation: 4,
-  },
-  card: {
-    backgroundColor: '#fff',
-    borderRadius: 22,
-    padding: 20,
-    shadowColor: '#000',
-    shadowOpacity: 0.05,
-    shadowOffset: { width: 0, height: 10 },
-    shadowRadius: 20,
-    elevation: 4,
-  },
-  cardTitle: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: '#1F4E9C',
-    marginBottom: 14,
-  },
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 12,
-  },
-  label: {
-    color: '#7A8BAE',
-    fontSize: 14,
-  },
-  value: {
-    color: '#1D325D',
-    fontSize: 14,
-    maxWidth: '60%',
-    textAlign: 'right',
-  },
-});

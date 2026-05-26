@@ -1,0 +1,460 @@
+import { StyleSheet } from 'react-native';
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#E5EFF9',
+    justifyContent: 'center',
+    padding: 20,
+  },
+  card: {
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    padding: 24,
+    shadowColor: '#000',
+    shadowOpacity: 0.05,
+    shadowOffset: { width: 0, height: 10 },
+    shadowRadius: 20,
+    elevation: 6,
+  },
+  title: {
+    fontSize: 26,
+    fontWeight: '700',
+    color: '#1F4E9C',
+    marginBottom: 6,
+  },
+  subtitle: {
+    fontSize: 14,
+    color: '#7A8BAE',
+    marginBottom: 24,
+  },
+  input: {
+    height: 48,
+    marginBottom: 14,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#D6DAE7',
+    paddingHorizontal: 16,
+    backgroundColor: '#F7F9FD',
+  },
+  button: {
+    height: 50,
+    borderRadius: 14,
+    backgroundColor: '#234F9C',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 8,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  footer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 20,
+  },
+  footerText: {
+    color: '#7A8BAE',
+  },
+  footerLink: {
+    color: '#234F9C',
+    fontWeight: '700',
+  },
+  errorText: {
+    color: '#D93025',
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+
+  container: {
+    flex: 1,
+    backgroundColor: '#E5EFF9',
+  },
+  content: {
+    padding: 16,
+    paddingBottom: 32,
+  },
+  flag: {
+    width: '100%',
+    height: 220,
+    borderRadius: 18,
+    marginBottom: 18,
+  },
+  headerRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: '700',
+    color: '#1F4E9C',
+  },
+  subtitle: {
+    fontSize: 15,
+    color: '#7A8BAE',
+    marginTop: 4,
+  },
+  favoriteButton: {
+    width: 52,
+    height: 52,
+    borderRadius: 16,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOpacity: 0.08,
+    shadowOffset: { width: 0, height: 8 },
+    shadowRadius: 10,
+    elevation: 4,
+  },
+  card: {
+    backgroundColor: '#fff',
+    borderRadius: 22,
+    padding: 20,
+    shadowColor: '#000',
+    shadowOpacity: 0.05,
+    shadowOffset: { width: 0, height: 10 },
+    shadowRadius: 20,
+    elevation: 4,
+  },
+  cardTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#1F4E9C',
+    marginBottom: 14,
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 12,
+  },
+  label: {
+    color: '#7A8BAE',
+    fontSize: 14,
+  },
+  value: {
+    color: '#1D325D',
+    fontSize: 14,
+    maxWidth: '60%',
+    textAlign: 'right',
+  },
+  container: {
+    flex: 1,
+    backgroundColor: '#E5EFF9',
+    padding: 16,
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: '700',
+    color: '#1F4E9C',
+    marginBottom: 6,
+  },
+  subtitle: {
+    color: '#7A8BAE',
+    marginBottom: 16,
+  },
+  card: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#fff',
+    borderRadius: 18,
+    padding: 14,
+    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: '#E1E7F5',
+  },
+  leftRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+  },
+  flag: {
+    width: 52,
+    height: 38,
+    borderRadius: 10,
+    marginRight: 12,
+  },
+  countryInfo: {
+    flex: 1,
+  },
+  countryName: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#1D325D',
+  },
+  countrySubtitle: {
+    fontSize: 13,
+    color: '#7A8BAE',
+    marginTop: 3,
+  },
+  emptyState: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 80,
+  },
+  emptyText: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#1F4E9C',
+    marginBottom: 10,
+  },
+  emptyHint: {
+    color: '#7A8BAE',
+    textAlign: 'center',
+    paddingHorizontal: 20,
+  },
+
+
+
+  container: {
+    flex: 1,
+    backgroundColor: '#E5EFF9',
+    padding: 16,
+  },
+  headerBlock: {
+    marginBottom: 16,
+  },
+  headerTitle: {
+    fontSize: 28,
+    fontWeight: '700',
+    color: '#1F4E9C',
+  },
+  headerSubtitle: {
+    color: '#7A8BAE',
+    marginTop: 6,
+  },
+  searchBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: '#D6DAE7',
+    paddingHorizontal: 14,
+    marginBottom: 16,
+  },
+  searchIcon: {
+    marginRight: 10,
+  },
+  searchInput: {
+    flex: 1,
+    height: 48,
+  },
+  card: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#fff',
+    borderRadius: 18,
+    padding: 14,
+    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: '#E1E7F5',
+  },
+  leftRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+  },
+  flag: {
+    width: 52,
+    height: 38,
+    borderRadius: 10,
+    marginRight: 12,
+  },
+  countryInfo: {
+    flex: 1,
+  },
+  countryName: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#1D325D',
+  },
+  countrySubtitle: {
+    fontSize: 13,
+    color: '#7A8BAE',
+    marginTop: 3,
+  },
+  errorText: {
+    color: '#D93025',
+    textAlign: 'center',
+    marginTop: 24,
+  },
+
+
+
+  container: {
+    flex: 1,
+    backgroundColor: '#E5EFF9',
+    justifyContent: 'center',
+    padding: 20,
+  },
+  card: {
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    padding: 24,
+    shadowColor: '#000',
+    shadowOpacity: 0.05,
+    shadowOffset: { width: 0, height: 10 },
+    shadowRadius: 20,
+    elevation: 6,
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: '700',
+    color: '#1F4E9C',
+    marginBottom: 6,
+  },
+  subtitle: {
+    fontSize: 14,
+    color: '#7A8BAE',
+    marginBottom: 24,
+  },
+  input: {
+    height: 48,
+    marginBottom: 14,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#D6DAE7',
+    paddingHorizontal: 16,
+    backgroundColor: '#F7F9FD',
+  },
+  button: {
+    height: 50,
+    borderRadius: 14,
+    backgroundColor: '#234F9C',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 8,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  footer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 20,
+  },
+  footerText: {
+    color: '#7A8BAE',
+  },
+  footerLink: {
+    color: '#234F9C',
+    fontWeight: '700',
+  },
+  errorText: {
+    color: '#D93025',
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+
+  container: {
+    flex: 1,
+    backgroundColor: '#E5EFF9',
+    padding: 16,
+  },
+  pageTitle: {
+    fontSize: 28,
+    fontWeight: '700',
+    color: '#1F4E9C',
+    marginBottom: 16,
+  },
+  profileCard: {
+    backgroundColor: '#fff',
+    borderRadius: 22,
+    padding: 24,
+    alignItems: 'center',
+    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOpacity: 0.05,
+    shadowOffset: { width: 0, height: 10 },
+    shadowRadius: 20,
+    elevation: 4,
+  },
+  name: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#1D325D',
+    marginBottom: 6,
+  },
+  email: {
+    color: '#7A8BAE',
+    fontSize: 14,
+  },
+  statCard: {
+    backgroundColor: '#fff',
+    borderRadius: 18,
+    padding: 16,
+    alignItems: 'center',
+    marginBottom: 22,
+  },
+  statLabel: {
+    color: '#7A8BAE',
+    marginBottom: 8,
+  },
+  statValue: {
+    fontSize: 22,
+    fontWeight: '700',
+    color: '#1F4E9C',
+  },
+  section: {
+    backgroundColor: '#fff',
+    borderRadius: 22,
+    padding: 20,
+    shadowColor: '#000',
+    shadowOpacity: 0.05,
+    shadowOffset: { width: 0, height: 10 },
+    shadowRadius: 20,
+    elevation: 4,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#1F4E9C',
+    marginBottom: 14,
+  },
+  input: {
+    height: 48,
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: '#D6DAE7',
+    backgroundColor: '#F7F9FD',
+    paddingHorizontal: 16,
+    marginBottom: 12,
+  },
+  message: {
+    color: '#1F4E9C',
+    marginBottom: 12,
+  },
+  button: {
+    height: 50,
+    borderRadius: 14,
+    backgroundColor: '#234F9C',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  signOutButton: {
+    marginTop: 20,
+    alignItems: 'center',
+  },
+  signOutText: {
+    color: '#E63946',
+    fontWeight: '700',
+  },
+});
+
+export default styles;
+
